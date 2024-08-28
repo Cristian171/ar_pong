@@ -1,15 +1,19 @@
 using UnityEngine;
 
-public class PaddleController : MonoBehaviour
+public class MovePaddle : MonoBehaviour
 {
     public float speed = 10f;
-    private float moveInput;
 
     void Update()
     {
-        // Obtener la entrada horizontal del usuario
-        moveInput = Input.GetAxis("Horizontal");
-        // Mover el paddle horizontalmente
-        transform.Translate(Vector3.right * moveInput * speed * Time.deltaTime);
+        // Obtener la entrada del usuario en los ejes X e Y
+        float moveX = Input.GetAxis("Horizontal"); // Mueve la paleta en el eje X (izquierda y derecha)
+        float moveY = Input.GetAxis("Vertical");   // Mueve la paleta en el eje Y (arriba y abajo)
+
+        // Crear el vector de movimiento y normalizarlo para evitar velocidades incontrolables
+        Vector3 movement = new Vector3(moveX, moveY, 0).normalized * speed * Time.deltaTime;
+
+        // Aplicar el movimiento a la posición de la paleta
+        transform.Translate(movement);
     }
 }
